@@ -1,28 +1,27 @@
 //Funcion para sumar
-const addNumber = (a,b) =>{
-    return a + b
+const addNumber = (a, b) => {
+  return a + b;
 };
 
 //Funcion para restar
-const subtractNumber = (a,b) =>{
-    return a - b
-}
-
-//Funcion para divir
-const divisionNumber = (a,b) => {
-    return a / b
-}
-
-//Funcion para multiplicar
-const multiplyNumber = (a,b) =>{
-    return a*b
+const subtractNumber = (a, b) => {
+  return a - b;
 };
 
-console.log(addNumber(4,6));
-console.log(subtractNumber(6,2));
-console.log(divisionNumber(9,3));
-console.log(multiplyNumber(5,5));
+//Funcion para divir
+const divisionNumber = (a, b) => {
+  return a / b;
+};
 
+//Funcion para multiplicar
+const multiplyNumber = (a, b) => {
+  return a * b;
+};
+
+// console.log(addNumber(4, 6));
+// console.log(subtractNumber(6, 2));
+// console.log(divisionNumber(9, 3));
+// console.log(multiplyNumber(5, 5));
 
 //Operacion de calculadora, creo las variables.
 let oneNumber;
@@ -30,64 +29,50 @@ let operator;
 let twoNumber;
 
 //Funcion para la calculadora
-
-const operate = (oneNumber,operator,twoNumber) =>{
-    if (operator === "+"){
-        return addNumber(oneNumber,twoNumber)
-    }else if (operator === "-"){
-        return subtractNumber(oneNumber,twoNumber)
-    }else if (operator === "x"){
-        return multiplyNumber(oneNumber,twoNumber)
-    }else if (operator === "/"){
-        return divisionNumber(oneNumber,twoNumber)
-    }else{
-        return "Operador no valido"
-    }
+const operate = (operator,oneNumber,twoNumber) =>{
+  switch(operator){
+    case "+":
+      return addNumber(oneNumber,twoNumber);
+    case "-":
+      return subtractNumber(oneNumber,twoNumber);
+    case "/":
+      return divisionNumber(oneNumber,twoNumber);
+    case "*":
+      return multiplyNumber(oneNumber,twoNumber);
+      default:
+        return "Operador no válido"
+  }
 };
 
-console.log(operate(3,"/",9));
+
+// console.log(operate("+",5,6));
 
 
+//Funcion para visualizar el boton que estoy apretando
 
-//Logica para que al realizar operaciones, se visualizen en la pantalla de la calculadora
+// Selecciona todos los botones
+const buttons = document.querySelectorAll('button');
+const display = document.getElementById('display');
 
-//Creo la variable y la seteo en 0
-let displayValue = "0";
-
-//Seleccionar elemento por ID
-const display = document.getElementById("display");
-
-
-//Actualizar pantalla
-const updateDisplay = () =>{
-    display.textContent = displayValue;
-};
-
-const buttons = document.querySelectorAll("button");
+let visualDisplay = '';
 
 
+// Agrega un event listener a cada botón
 buttons.forEach(button => {
-    button.addEventListener('click', () => {
-      const buttonValue = button.textContent;
-  
-      // Verificar si el botón es un número
-      if (!isNaN(buttonValue)) {
-        // Si displayValue es '0', reemplazarlo, de lo contrario, añadir el número
-        if (displayValue === '0') {
-          displayValue = buttonValue;
-        } else {
-          displayValue += buttonValue;
-        }
-      } else if (buttonValue === 'Clear') {
-        // Si el botón es "Clear", reiniciar displayValue
-        displayValue = '0';
-      }
+  button.addEventListener('click', () => {
+    //Verifico si el boton presionado es un numero
+    const buttonText = `${button.textContent}`
+    if(!isNaN(buttonText) || buttonText === '.'){
+      visualDisplay+= buttonText;
+    }else if(buttonText === 'Clear'){
+      visualDisplay = '';
+    }else if(buttonText === '+' || '-' || '*' || '/'){
+      visualDisplay+= buttonText;
+    }else if(buttonText === '='){
       
-      // Actualizar la pantalla
-      updateDisplay();
-    });
+    }
+
+    display.textContent = visualDisplay
   });
-
-
-
+});
 
